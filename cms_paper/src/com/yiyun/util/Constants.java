@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
-	/***______________________测试3333________________________________****/
+	/***______________________测试333________________________________****/
 	/******************************数据接口常量开始********************************************/
 	
 	public final static String MOBILE_PARAM_SHOW_COUNT_KEY = "showCount";
