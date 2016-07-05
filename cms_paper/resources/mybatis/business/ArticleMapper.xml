@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ArticleMapper">
+	
+		<resultMap id="BaseResultMap" type="com.yiyun.entity.business.SysArticle" >
+	    <id column="article_id" property="articleId" jdbcType="VARCHAR" />
+	    <result column="title" property="title" jdbcType="VARCHAR" />
+	    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
+	    <result column="short_content" property="shortContent" jdbcType="VARCHAR" />
+	    <result column="pic" property="pic" jdbcType="VARCHAR" />
+	    <result column="top_pic" property="topPic" jdbcType="VARCHAR" />
+	    <result column="article_content" property="articleContent" jdbcType="VARCHAR" />
+	    <result column="static_url" property="staticUrl" jdbcType="VARCHAR" />
+	    <result column="update_date" property="updateDate" jdbcType="VARCHAR" />
+	    <result column="is_transfer" property="isTransfer" jdbcType="VARCHAR" />
+	    <result column="editor_id" property="editorId" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+	    <result column="content_ext" property="contentExt" jdbcType="VARCHAR" />
+	    <result column="content_tags" property="contentTags" jdbcType="VARCHAR" />
+	    <result column="author" property="author" jdbcType="VARCHAR" />
+	    <result column="attribute" property="attribute" jdbcType="VARCHAR" />
+	    <result column="weight" property="weight" jdbcType="VARCHAR" />
+	    <result column="is_comment" property="isComment" jdbcType="VARCHAR" />
+	    <result column="online_time" property="onlineTime" jdbcType="VARCHAR" />
+	    <result column="offline_time" property="offlineTime" jdbcType="VARCHAR" />
+	    <result column="source_title" property="sourceTitle" jdbcType="VARCHAR" />
+	    <result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
+	    <result column="top_type" property="topType" jdbcType="VARCHAR" />
+	    <result column="ref_column1" property="refColumn1" jdbcType="VARCHAR" />
+	  </resultMap>
+	  
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		INSERT INTO sys_article (
+article_id,
+ title,
+ subtitle,
+ short_content,
+ pic,
+ top_pic,
+ article_content,
+ static_url,
+ update_date,
+ editor_id,
+ status,
+ content_ext,
+ content_tags,
+ author,
+ attribute,
+ weight,
+ is_comment,
+ is_transfer,
+ online_time,
+ offline_time,
+ source_title,
+ source_link,
+ top_type) VALUES 
+ (
+ #{articleId},
+ #{title},
+ #{subtitle},
+ #{shortContent},
+ #{pic},
+ #{topPic},
+ #{articleContent},
+ #{staticUrl},
+ #{updateDate},
+ #{editorId},
+ #{status},
+ #{contentExt},
+ #{contentTags},
+ #{author},
+ #{attribute},
+ #{weight},
+ #{isComment},
+ #{isTransfer},
+ #{onlinetime},
+ #{offlineTime},
+ #{sourceTitle},
+ #{sourceLink},
+ #{topType}
+ )
+		
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from SYS_ARTICLE
+		where 
+			article_id = #{articleId}
+	</delete>
+	<!-- 删除-->
+	<delete id="deleteArticleChannel" parameterType="pd">
+		delete from sys_article_channel
+		where 
+			article_id = #{articleId}
+	</delete>
+	
+	<select id="batchAddArticleChannel" parameterType="java.util.List">
+                INSERT INTO sys_article_channel(article_id,channel_id) VALUES
+                <foreach collection="list"  item="itm" separator=",">
+                        (#{itm.article_id},#{itm.channel_id})
+                </foreach>
+    </select>
+	
+	<insert id="addDeleteBak" parameterType="pd">
+	     insert into sys_article_del
+	     select * from sys_article 	
+	     where 
+			article_id = #{articleId}
+	</insert>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  SYS_ARTICLE
+			set 
+				title = #{title},
+				subtitle = #{subtitle},
+				short_content = #{shortContent},
+				pic = #{pic},
+				top_pic = #{topPic},
+				article_content = #{articleContent},
+				static_url = #{staticUrl},
+				update_date = #{updateDate},
+				editor_id = #{editorId},
+				content_ext=#{contentExt},
+				content_tags=#{contentTags},
+				author=#{author},
+				attribute=#{attribute},
+				weight=#{weight},
+				is_comment=#{isComment},
+				is_transfer=#{isTransfer},
+				online_time=#{onlineTime},
+				offline_time=#{offlineTime},
+				source_title=#{sourceTitle},
+				source_link=#{sourceLink},
+				top_type=#{topType},
+				status = #{status}
+			where 
+				article_id = #{articleId}
+	</update>
+	
+		<update id="editStatus" parameterType="pd">
+		update  SYS_ARTICLE
+			set 
+				status = #{status}
+			where 
+				article_id = #{articleId}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultMap="BaseResultMap">
+		select 
+article_id as articleId,
+ title,
+ subtitle,
+ short_content as shortContent,
+ pic,
+ top_pic as topPic,
+ article_content as articleContent,
+ static_url as staticUrl,
+ update_date as updateDate,
+ editor_id as editorId,
+ status,
+ content_ext as contentExt,
+ content_tags as contentTags,
+ author,
+ attribute,
+ weight,
+ is_comment as isComment,
+ is_transfer as isTransfer,
+  online_time as onlineTime,
+ offline_time as offlineTime,
+ source_title as sourceTitle,
+ source_link as sourceLink,
+ top_type as topType
+		from 
+			SYS_ARTICLE
+		where 1=1
+		 <if test="article_id != null and  article_id != ''">
+			and article_id = #{article_id}
+		 </if>
+		  <if test="articleId != null and  articleId != ''">
+			and article_id = #{articleId}
+		 </if>
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultMap="BaseResultMap">
+						select 
+article_id as articleId,
+ title,
+ subtitle,
+ short_content as shortContent,
+ pic,
+ top_pic as topPic,
+ article_content as articleContent,
+ static_url as staticUrl,
+ update_date as updateDate,
+ editor_id as editorId,
+ status,
+ content_ext as contentExt,
+ content_tags as contentTags,
+ author,
+ attribute,
+ weight,
+ is_comment as isComment,
+ is_transfer as isTransfer,
+   online_time as onlineTime,
+ offline_time as offlineTime,
+ source_title as sourceTitle,
+ source_link as sourceLink,
+  top_type as topType
+		from 
+			SYS_ARTICLE
+			where 1=1
+			 <if test="pd.status != null and  pd.status != ''">
+				and status = #{pd.status}
+			 </if>
+			 <if test="pd.title != null and pd.subtitle != null">
+	  		and	(
+					 title LIKE CONCAT(CONCAT('%', #{pd.title}),'%')
+					 or 
+					 subtitle LIKE CONCAT(CONCAT('%', #{pd.subtitle}),'%') 
+				)
+			</if>
+			<if test="pd.channelId != null and  pd.channelId != ''">
+				and article_id  in (select article_id from sys_article_channel where channel_id=#{pd.channelId})
+			 </if>
+			
+			order by online_time desc
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultMap="BaseResultMap">
+						select 
+article_id as articleId,
+ title,
+ subtitle,
+ short_content as shortContent,
+ pic,
+ top_pic as topPic,
+ article_content as articleContent,
+ static_url as staticUrl,
+ update_date as updateDate,
+ editor_id as editorId,
+ status,
+ content_ext as contentExt,
+ content_tags as contentTags,
+ author,
+ attribute,
+ weight,
+ is_comment as isComment,
+ is_transfer as isTransfer,
+   online_time as onlineTime,
+ offline_time as offlineTime,
+ source_title as sourceTitle,
+ source_link as sourceLink,
+  top_type as topType
+		from 
+				SYS_ARTICLE 
+			where 1=1
+			<if test="channelId != null and  channelId != ''">
+				and article_id  in (select article_id from sys_article_channel where channel_id=#{channelId})
+			 </if>
+			 <if test="notArticleId != null and  notArticleId != ''">
+			  and article_id !=#{notArticleId}
+			 </if>	
+				
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from SYS_ARTICLE
+		where 
+			article_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<insert id="addDeleteAllBak" parameterType="String">
+		insert into sys_article_del 
+		select * from sys_article
+		where 
+			article_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	
+	</insert>
+	
+	
+	
+	
+	<insert id="saveAuditMsg" parameterType="pd">
+		INSERT INTO sys_audit_msg (msg_id,article_id, audit_user, audit_time, cur_status, audit_status, msg_info) 
+		VALUES ( #{msg_id}, #{article_id},#{audit_user}, #{audit_time}, #{cur_status}, #{audit_status}, #{msg_info})
+	</insert>
+	
+	<select id="auditMsglistPage" parameterType="page" resultType="pd">
+		select * from sys_audit_msg
+			
+	</select>
+	
+	
+	<delete id="deleteArticleRef" parameterType="pd">
+		delete from sys_article_refshow
+		where 
+			article_id = #{articleId}
+	</delete>
+	<select id="showContentRefId" parameterType="pd" resultType="pd">
+		select * from sys_article_refshow
+			where article_id =#{articleId}
+			
+	</select>
+	
+	<insert id="batchAddArticleRef" parameterType="java.util.List">
+		 INSERT INTO sys_article_refshow(article_id,ref_id) VALUES
+                <foreach collection="list"  item="itm" separator=",">
+                        (#{itm.article_id},#{itm.ref_id})
+                </foreach>
+	
+	</insert>
+	
+	
+	
+	
+	
+</mapper>

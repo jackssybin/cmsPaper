@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ParamMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into SYS_PARAM(
+			PARAM_CODE,	
+			PARAM_NAME,	
+			PARAM_VALUE,
+			PARAM_TYPE,	
+			PARAM_DESC,	
+			PARAM_ORDER,	
+			PARAM_ID
+		) values (
+			#{PARAM_CODE},	
+			#{PARAM_NAME},
+			#{PARAM_VALUE},	
+			#{PARAM_TYPE},	
+			#{PARAM_DESC},	
+			#{PARAM_ORDER},	
+			#{PARAM_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from SYS_PARAM
+		where 
+			PARAM_ID = #{PARAM_ID}
+	</delete>
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  SYS_PARAM
+			set 
+			PARAM_CODE = #{PARAM_CODE},	
+			PARAM_NAME =#{PARAM_NAME},	
+			PARAM_VALUE=#{PARAM_VALUE},
+			PARAM_TYPE =#{PARAM_TYPE},	
+			PARAM_DESC = #{PARAM_DESC},
+			PARAM_ORDER =#{PARAM_ORDER}
+			where 
+				PARAM_ID = #{PARAM_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			PARAM_CODE,	
+			PARAM_NAME,	
+			PARAM_VALUE,
+			PARAM_TYPE,	
+			PARAM_DESC,	
+			PARAM_ORDER,	
+			PARAM_ID
+		from 
+			SYS_PARAM
+		where 
+			PARAM_ID = #{PARAM_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.PARAM_CODE,	
+				a.PARAM_NAME,
+				a.PARAM_VALUE,	
+				a.PARAM_TYPE,	
+				a.PARAM_DESC,	
+				a.PARAM_ORDER,	
+				a.PARAM_ID
+		from 
+				SYS_PARAM a
+		where 1=1		
+				<if test="pd.PARAM_CODE != null and pd.PARAM_CODE != ''">
+			   and
+				(
+					 a.PARAM_CODE=#{pd.PARAM_CODE}
+				)
+			    </if>
+				<if test="pd.PARAM_NAME != null and pd.PARAM_NAME != ''"><!-- 关键词检索 -->
+			   and
+				(
+					 a.PARAM_NAME LIKE CONCAT(CONCAT('%', #{pd.PARAM_NAME}),'%')
+				)
+			    </if>
+		order by a.PARAM_ORDER asc
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.PARAM_CODE,	
+				a.PARAM_NAME,
+				a.PARAM_VALUE,	
+				a.PARAM_TYPE,	
+				a.PARAM_DESC,	
+				a.PARAM_ORDER,	
+				a.PARAM_ID
+		from 
+				SYS_PARAM a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from SYS_PARAM
+		where 
+			PARAM_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

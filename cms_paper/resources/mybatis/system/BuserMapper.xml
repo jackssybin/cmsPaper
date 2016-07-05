@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BuserMapper">
+	
+	<resultMap type="Buser" id="buserResultMap">
+		<id column="USERID" property="USERID"/>
+		<result column="OPENID" property="OPENID"/>
+		<result column="NICKNAME" property="NICKNAME"/>
+		<result column="HEADIMGURL" property="HEADIMGURL"/>
+		<result column="NAME" property="NAME"/>
+		<result column="SEX" property="SEX"/>
+		<result column="PHONE" property="PHONE"/>
+		<result column="QQ" property="QQ"/>
+		<result column="EMAIL" property="EMAIL"/>
+		<result column="ADDRESS" property="ADDRESS"/>
+		<result column="INTRODUCTION" property="INTRODUCTION"/>
+		<result column="REGISTER_TIME" property="REGISTER_TIME"/>
+		<result column="LAST_LOGIN_TIME" property="LAST_LOGIN_TIME"/>
+		<result column="LAST_IP" property="LAST_IP"/>
+		<result column="COMMON_IP" property="COMMON_IP"/>
+		<result column="USER_STATE" property="USER_STATE"/>
+	</resultMap>
+	
+	<select id="ListAllBuser" parameterType="page" resultMap="buserResultMap">
+		select
+			USERID,
+			OPENID,
+			NICKNAME,
+			HEADIMGURL,
+			NAME,
+			SEX,
+			PHONE,
+			QQ,
+			EMAIL,
+			ADDRESS,
+			INTRODUCTION,
+			REGISTER_TIME,
+			LAST_LOGIN_TIME,
+			LAST_IP,
+			COMMON_IP,
+			USER_STATE 
+		from 
+			SYS_BUSER
+		where 1 = 1
+			<if test="pd.NICKNAME != null and pd.NICKNAME != ''">
+			and
+					 NICKNAME LIKE CONCAT(CONCAT('%', #{pd.NICKNAME}),'%')
+			</if>
+	</select>
+	
+	<select id="listAll" parameterType="page" resultType="pd">
+		select
+			USERID,
+			OPENID,
+			NICKNAME,
+			HEADIMGURL,
+			NAME,
+			SEX,
+			PHONE,
+			QQ,
+			EMAIL,
+			ADDRESS,
+			INTRODUCTION,
+			REGISTER_TIME,
+			LAST_LOGIN_TIME,
+			LAST_IP,
+			COMMON_IP,
+			USER_STATE 
+		from 
+			SYS_BUSER
+	</select>
+	
+	<select id="findBuserById" parameterType="pd" resultType="pd">
+		select
+			OPENID,
+			NICKNAME,
+			HEADIMGURL,
+			NAME,
+			SEX,
+			PHONE,
+			QQ,
+			EMAIL,
+			ADDRESS,
+			INTRODUCTION,
+			REGISTER_TIME,
+			LAST_LOGIN_TIME,
+			LAST_IP,
+			COMMON_IP,
+			USER_STATE
+		from
+			SYS_BUSER
+		where
+			USERID = #{USERID}
+	</select>
+	
+	<insert id="saveBuser" parameterType="pd">
+		insert into
+			SYS_BUSER(
+				USERID,
+				OPENID,
+				NICKNAME,
+				HEADIMGURL,
+				NAME,
+				SEX,
+				PHONE,
+				QQ,
+				EMAIL,
+				ADDRESS,
+				INTRODUCTION,
+				REGISTER_TIME,
+				LAST_LOGIN_TIME,
+				LAST_IP,
+				COMMON_IP,
+				USER_STATE
+			)
+		values(
+			#{USERID},
+			#{OPENID},
+			#{NICKNAME},	
+			#{HEADIMGURL},
+			#{NAME},
+			#{SEX},
+			#{PHONE},
+			#{QQ},
+			#{EMAIL},
+			#{ADDRESS},
+			#{INTRODUCTION},
+			#{REGISTER_TIME},
+			#{LAST_LOGIN_TIME},
+			#{LAST_IP},
+			#{COMMON_IP},
+			#{USER_STATE}
+		)
+	</insert>
+	
+	<delete id="delBuser" parameterType="pd">
+		delete from
+			SYS_BUSER
+		where USERID = #{USERID}
+	</delete>
+	
+	<update id="updateBuser" parameterType="pd">
+		update 
+			SYS_BUSER
+		set
+			OPENID = #{OPENID},
+			NICKNAME = #{NICKNAME},
+			HEADIMGURL = #{HEADIMGURL},
+			NAME = #{NAME},
+			SEX = #{SEX},
+			PHONE = #{PHONE},
+			QQ = #{QQ},
+			EMAIL = #{EMAIL}, 
+			ADDRESS = #{ADDRESS},
+			INTRODUCTION = #{INTRODUCTION},
+			REGISTER_TIME = #{REGISTER_TIME},
+			LAST_LOGIN_TIME = #{LAST_LOGIN_TIME},
+			LAST_IP = #{LAST_IP},
+			COMMON_IP = #{COMMON_IP},
+			USER_STATE = #{USER_STATE}
+		where
+			USERID = #{USERID}
+	</update>
+	
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MobileDataMapper">
+	
+		<resultMap id="BaseResultMap" type="com.yiyun.entity.business.MobileData" >
+	    <id column="article_id" property="articleId" jdbcType="VARCHAR" />
+	    <result column="article_title" property="title" jdbcType="VARCHAR" />
+	    <result column="source_title" property="sourceTitle" jdbcType="VARCHAR" />
+	    <result column="pic" property="pic" jdbcType="VARCHAR" />
+	    <result column="top_pic" property="topPic" jdbcType="VARCHAR" />
+	    <result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
+	    <result column="comment_num" property="commentNum" jdbcType="VARCHAR" />
+	  </resultMap>
+	  
+	
+	<!-- 通过参数获取内容列表数据 -->
+	<select id="datalistPageMobile" parameterType="page" resultMap="BaseResultMap">
+		select 
+				t.article_id,
+				t.title||' '||t.subtitle article_title,
+				t.pic,
+				t.top_pic,
+				t.source_title,
+				t.source_link,
+				count(t1.PRO_ID) comment_num 
+		from sys_article t left join sys_comment t1 
+			on t.article_id=t1.PRO_ID
+			left join sys_article_channel t2
+			on t2.article_id=t.article_id
+	       where  status='publish'
+		 <if test="pd.channelId != null and  pd.channelId != ''">
+			and t2.channel_id= #{pd.channelId}
+		 </if>
+		 <if test="pd.topType != null and  pd.topType != ''">
+			and t.top_type = #{pd.topType}
+		 </if>
+		 group by t.article_id,t.title,t.subtitle,t.pic,t.top_pic,t.source_title,t.source_link
+		 order by online_time desc
+	</select>
+	
+	
+	
+</mapper>

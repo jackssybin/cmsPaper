@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ToolsMapper">
+	
+	  <!--插入订单序号-->
+	<insert id="saveGenSeq" parameterType="pd">
+		insert into sys_number_gen(
+			CUR_DATE,	
+			CUR_TIME,	
+		<if test="CUR_TYPE != null and  CUR_TYPE != ''" >
+			CUR_TYPE,
+		</if>
+			CUR_SEQ
+		) values (
+			#{CUR_DATE},	
+			#{CUR_TIME},
+		<if test="CUR_TYPE != null and  CUR_TYPE != ''" >
+			#{CUR_TYPE},
+		</if>
+			#{CUR_SEQ}
+		)
+	</insert>
+	
+	<update id="editGenSeq" parameterType="pd">
+		update sys_number_gen
+			set CUR_SEQ=#{CUR_SEQ},
+			<if test="CUR_TYPE != null and  CUR_TYPE != ''" >
+			CUR_TYPE=#{CUR_TYPE},
+			</if>
+				CUR_TIME=#{CUR_TIME}
+		where CUR_DATE=#{CUR_DATE}
+	</update>
+	
+	<!-- 查询当天最大的订单数据 -->
+	<select id="findMaxOrderSeq" parameterType="pd" resultType="String">
+		select case when max(CUR_SEQ) is null then '1000'
+          else max(CUR_SEQ)+1 end as cur_seq
+		from 
+			sys_number_gen
+		where 1=1
+			 <if test="CUR_DATE != null and  CUR_DATE != ''" >
+			 and CUR_DATE = #{CUR_DATE}
+			</if>
+	</select>
+	
+	
+	<select id="listAllAudit" parameterType="pd" resultType="sysAudit">
+		SELECT 
+		cur_status as curStatus, 
+		next_status as nextStatus, 
+		prev_status as prevStatus
+		 FROM sys_audit;
+	</select>
+	
+		
+	<select id="queryCommonTree" resultType="com.yiyun.entity.system.ZTreeDO" parameterType="pd">
+			
+		select channel_id as id,channel_name as name,parent_id as pId,'true' as open  from sys_channel 
+	</select>
+	
+	
+	
+</mapper>

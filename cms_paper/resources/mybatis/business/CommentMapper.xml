@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into SYS_COMMENT(
+			COMMENT_ID,	
+			PRO_ID,	
+			BELONG_USER,	
+			COMMENT_REFID,	
+			COMMENT_CONTENT,	
+			COMMENT_TIME,	
+			COMMENT_STATUS,	
+			COMMENT_GOOD,	
+			COMMENT_BAD,	
+			COMMENT_TOP,	
+			COMMENT_TOPTIME,	
+			ORDER_NUM
+		) values (
+			#{COMMENT_ID},	
+			#{PRO_ID},	
+			#{BELONG_USER},	
+			#{COMMENT_REFID},	
+			#{COMMENT_CONTENT},	
+			#{COMMENT_TIME},	
+			#{COMMENT_STATUS},	
+			#{COMMENT_GOOD},	
+			#{COMMENT_BAD},	
+			#{COMMENT_TOP},	
+			#{COMMENT_TOPTIME},	
+			#{ORDER_NUM}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from SYS_COMMENT
+		where 
+			COMMENT_ID = #{COMMENT_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  SYS_COMMENT
+			set 
+				COMMENT_ID = #{COMMENT_ID},
+				PRO_ID = #{PRO_ID},
+				BELONG_USER = #{BELONG_USER},
+				COMMENT_REFID = #{COMMENT_REFID},
+				COMMENT_CONTENT = #{COMMENT_CONTENT},
+				COMMENT_TIME = #{COMMENT_TIME},
+				COMMENT_STATUS = #{COMMENT_STATUS},
+				COMMENT_GOOD = #{COMMENT_GOOD},
+				COMMENT_BAD = #{COMMENT_BAD},
+				COMMENT_TOP = #{COMMENT_TOP},
+				COMMENT_TOPTIME = #{COMMENT_TOPTIME},
+				ORDER_NUM = #{ORDER_NUM}
+			where 
+				COMMENT_ID = #{COMMENT_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			COMMENT_ID,	
+			PRO_ID,	
+			BELONG_USER,	
+			COMMENT_REFID,	
+			COMMENT_CONTENT,	
+			COMMENT_TIME,	
+			COMMENT_STATUS,	
+			COMMENT_GOOD,	
+			COMMENT_BAD,	
+			COMMENT_TOP,	
+			COMMENT_TOPTIME,	
+			ORDER_NUM
+		from 
+			SYS_COMMENT
+		where 
+			COMMENT_ID = #{COMMENT_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.COMMENT_ID,	
+				a.PRO_ID,	
+				a.BELONG_USER,	
+				a.COMMENT_REFID,	
+				a.COMMENT_CONTENT,	
+				a.COMMENT_TIME,	
+				a.COMMENT_STATUS,	
+				a.COMMENT_GOOD,	
+				a.COMMENT_BAD,	
+				a.COMMENT_TOP,	
+				a.COMMENT_TOPTIME,	
+				a.ORDER_NUM
+		from 
+				SYS_COMMENT a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.COMMENT_ID,	
+				a.PRO_ID,	
+				a.BELONG_USER,	
+				a.COMMENT_REFID,	
+				a.COMMENT_CONTENT,	
+				a.COMMENT_TIME,	
+				a.COMMENT_STATUS,	
+				a.COMMENT_GOOD,	
+				a.COMMENT_BAD,	
+				a.COMMENT_TOP,	
+				a.COMMENT_TOPTIME,	
+				a.ORDER_NUM
+		from 
+				SYS_COMMENT a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from SYS_COMMENT
+		where 
+			COMMENT_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>iScroll demo: simple</title>
+
+<script type="text/javascript" src="../../build/iscroll.js"></script>
+<script type="text/javascript">  
+var myScroll = null;  
+var generatedCount = 0;  
+function pullUpAction () {  
+		alert(1)
+        var el, li, i;  
+        el = document.getElementById('thelist');  
+        for (i=0; i<3; i++) {  
+            li = document.createElement('li');  
+            li.innerText = 'Generated row ' + (++generatedCount);  
+            el.appendChild(li, el.childNodes[0]);  
+        }  
+        myScroll.refresh();     // Remember to refresh when contents are loaded (ie: on ajax completion)!  
+}  
+  
+window.onload = function() {  
+	alert(11)
+    myScroll = new iScroll('wrapper', {  
+        onScrollEnd: function () {  
+            //如果滑动到底部，则加载更多数据（距离最底部10px高度）  
+            if ((this.y - this.maxScrollY) > 10) {             
+                pullUpAction();  
+            }  
+        }  
+    });  
+    for (var n=0; n<10; n++) {  
+        pullUpAction();  
+    }  
+}  
+  
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);  
+</script>  
+  
+<style type="text/css" media="all">  
+#wrapper1 {  
+    height:300px;  
+}  
+  
+  
+#scroller1 li {  
+    height:40px;  
+    line-height:40px;  
+}  
+  
+</style> 
+
+
+</head>
+<body >
+<div id="header">iScroll</div>
+
+<div id="wrapper">  
+    <div id="scroller">  
+        <ul id="thelist">  
+        	<li>Pretty row 1</li>
+			<li>Pretty row 2</li>
+			<li>Pretty row 3</li>
+			<li>Pretty row 4</li>
+			<li>Pretty row 5</li>
+			<li>Pretty row 6</li>
+			<li>Pretty row 7</li>
+			<li>Pretty row 8</li>
+			<li>Pretty row 9</li>
+			<li>Pretty row 10</li>
+			<li>Pretty row 11</li>
+			<li>Pretty row 12</li>
+			<li>Pretty row 13</li>
+			<li>Pretty row 14</li>
+			<li>Pretty row 15</li>
+			<li>Pretty row 16</li>
+			<li>Pretty row 17</li>
+			<li>Pretty row 18</li>
+			<li>Pretty row 19</li>
+			<li>Pretty row 20</li>
+			<li>Pretty row 21</li>
+			<li>Pretty row 22</li>
+        </ul>  
+    </div>  
+</div>  
+
+<div id="footer"></div>
+
+</body>
+</html>

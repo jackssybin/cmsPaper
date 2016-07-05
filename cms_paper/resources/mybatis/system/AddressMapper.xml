@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AddressMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into SYS_ADDRESS(
+			USER_ID,	
+			LINKER,	
+			MOBILE,	
+			PHONE,	
+			AREA,	
+			ZONE,	
+			ZONE_DETAIL,	
+			DETAIL_ADDRESS,	
+			EMAIL,	
+			ALIAS,	
+			IS_DEFAULT,	
+			POST_CODE,	
+			ADDRESS_ID
+		) values (
+			#{USER_ID},	
+			#{LINKER},	
+			#{MOBILE},	
+			#{PHONE},	
+			#{AREA},	
+			#{ZONE},	
+			#{ZONE_DETAIL},	
+			#{DETAIL_ADDRESS},	
+			#{EMAIL},	
+			#{ALIAS},	
+			#{IS_DEFAULT},	
+			#{POST_CODE},	
+			#{ADDRESS_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from SYS_ADDRESS
+		where 
+			ADDRESS_ID = #{ADDRESS_ID}
+	</delete>
+	<delete id="deleteOrderAddressCopy" parameterType="pd">
+		delete from sys_order_address
+			where ORDER_NUM=#{ORDER_NUM}
+		and GROUP_TYPE=#{GROUP_TYPE}
+		and ADDRESS_ID = #{ADDRESS_ID}
+	</delete>
+	
+	<insert id="saveCopy" parameterType="pd">
+		insert into sys_order_address(
+			ORDER_NUM,
+			GROUP_TYPE,
+			USER_ID,	
+			LINKER,	
+			MOBILE,	
+			PHONE,	
+			AREA,	
+			ZONE,	
+			ZONE_DETAIL,	
+			DETAIL_ADDRESS,	
+			EMAIL,	
+			ALIAS,	
+			IS_DEFAULT,	
+			POST_CODE,	
+			ADDRESS_ID
+		) 
+		SELECT
+   		 #{ORDER_NUM},
+   			 #{GROUP_TYPE},
+   			USER_ID,	
+			LINKER,	
+			MOBILE,	
+			PHONE,	
+			AREA,	
+			ZONE,	
+			ZONE_DETAIL,	
+			DETAIL_ADDRESS,	
+			EMAIL,	
+			ALIAS,	
+			IS_DEFAULT,	
+			POST_CODE,	
+			ADDRESS_ID
+FROM
+    sys_address
+WHERE
+    ADDRESS_ID=#{ADDRESS_ID}
+	</insert>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  SYS_ADDRESS
+			set 
+				USER_ID = #{USER_ID},
+				LINKER = #{LINKER},
+				MOBILE = #{MOBILE},
+				PHONE = #{PHONE},
+				AREA = #{AREA},
+				ZONE = #{ZONE},
+				ZONE_DETAIL = #{ZONE_DETAIL},
+				DETAIL_ADDRESS = #{DETAIL_ADDRESS},
+				EMAIL = #{EMAIL},
+				ALIAS = #{ALIAS},
+				IS_DEFAULT = #{IS_DEFAULT},
+				POST_CODE = #{POST_CODE},
+			ADDRESS_ID = ADDRESS_ID
+			where 
+				ADDRESS_ID = #{ADDRESS_ID}
+	</update>
+	
+	<update id="editDefault" parameterType="pd">
+		update  SYS_ADDRESS
+			set 
+				IS_DEFAULT = #{IS_DEFAULT}
+			where 
+				ADDRESS_ID != #{ADDRESS_ID}
+				and USER_ID=#{USER_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			USER_ID,	
+			LINKER,	
+			MOBILE,	
+			PHONE,	
+			AREA,	
+			ZONE,	
+			ZONE_DETAIL,	
+			DETAIL_ADDRESS,	
+			EMAIL,	
+			ALIAS,	
+			IS_DEFAULT,	
+			POST_CODE,	
+			ADDRESS_ID
+		from 
+			SYS_ADDRESS
+		where 1=1
+		 <if test="ADDRESS_ID != null">
+       	and ADDRESS_ID = #{ADDRESS_ID}
+     	 </if>
+     	  <if test="USER_ID != null">
+       	and USER_ID = #{USER_ID}
+     	 </if>
+     	  <if test="IS_DEFAULT != null">
+       	and IS_DEFAULT = #{IS_DEFAULT}
+     	 </if>
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.USER_ID,	
+				a.LINKER,	
+				a.MOBILE,	
+				a.PHONE,	
+				a.AREA,	
+				a.ZONE,	
+				a.ZONE_DETAIL,	
+				a.DETAIL_ADDRESS,	
+				a.EMAIL,	
+				a.ALIAS,	
+				a.IS_DEFAULT,	
+				a.POST_CODE,	
+				a.ADDRESS_ID
+		from 
+				SYS_ADDRESS a
+				where 1=1
+				<if test="pd.USER_ID != null and  pd.USER_ID != ''" >
+				and	USER_ID=#{pd.USER_ID}
+				</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.USER_ID,	
+				a.LINKER,	
+				a.MOBILE,	
+				a.PHONE,	
+				a.AREA,	
+				a.ZONE,	
+				a.ZONE_DETAIL,	
+				a.DETAIL_ADDRESS,	
+				a.EMAIL,	
+				a.ALIAS,	
+				a.IS_DEFAULT,	
+				a.POST_CODE,	
+				a.ADDRESS_ID
+		from 
+				SYS_ADDRESS a
+				where a.USER_ID=#{USER_ID}
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from SYS_ADDRESS
+		where 
+			ADDRESS_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

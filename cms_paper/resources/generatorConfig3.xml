@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <classPathEntry location="D:\java\maven_repository\mysql\mysql-connector-java\5.1.22\mysql-connector-java-5.1.22.jar" />
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/eyeglass"
+                        userId="root"
+                        password="root1234">
+        </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="com.yiyun.entity.business" targetProject="eyeMarket\src">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="mybatis.business。bak"  targetProject="eyeMarket\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.yiyun.service.business.bak"  targetProject="eyeMarket\src">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+         <!-- 列出要生成代码的所有表，这里配置的是不生成Example文件 -->
+       <table tableName="sys_cart_detail" domainObjectName="sysCartDetail"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+  </context>
+</generatorConfiguration>

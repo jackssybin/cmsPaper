@@ -1,0 +1,302 @@
+@charset "utf-8";
+body{
+    background-color:#f1f1f1;
+    font-family:"微软雅黑";
+    text-align: center;
+    font-size:14px;
+    margin-bottom:103px;
+}
+/*轮播*/
+#banner img{
+    width:100%;
+    height:210px;
+    vertical-align:middle;
+}
+/*搜索框*/
+#search{
+    box-shadow: 0px 1px 5px rgba(0,0,0,0.08);
+    background-color: #fff;
+    width:95%;
+    display: inline-block;
+    height: 30px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 12px;
+    margin:2% auto;
+}
+#search a{
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin: 5px 0 0 5px;
+    background: url(../images/search.png) no-repeat;
+    cursor: pointer;
+}
+#search input{
+    border:none;
+    width:90%;
+    line-height:25px;
+}
+/*商品名称*/
+.gname_text{
+    height:40px;
+    text-align:left;
+}
+/*看大家的用户头像*/
+.check_userHead{
+    width:55px;
+    height:55px;
+}
+/*悬浮返回首页*/
+.back_index{
+    position:fixed;
+    right:10px;
+    bottom:200px;
+    z-index:1000;
+}
+.price{
+    color:#FF5353;
+}
+ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+/*标签页切换样式*/
+.nav>li>a:focus, .nav>li>a:hover{
+    background-color:#fff;
+}
+.exchange_tabs li.active a{
+    font-weight:bold;
+    color:#FF4C4C;
+}
+.bottom{
+    position:absolute;
+    bottom:-2px;
+    left:0;
+}
+.exchange_tabs{
+    width:100%;
+    height:44px;
+    line-height:44px;
+}
+.exchange_tabs li{
+    width:50%;
+    float:left;
+    position:relative;
+}
+a{
+    text-decoration:none;
+}
+a:focus, a:hover{
+    text-decoration:none;
+}
+p{
+    margin:0;
+}
+s{
+    color:#BABABA;
+    font-size:14px;
+}
+.footer{
+    /*margin-top:5%;*/
+    height:63px;
+    background-color:#fff;
+}
+.f_nav{
+    width:100%;
+    height:63px;
+    position:absolute;
+    top:1%;
+    padding-bottom:2px;
+    /*background-color:#fff;*/
+}
+.f_nav li{
+    float:left;
+    width:20%;
+    text-align:center;
+}
+.f_nav li a{
+    display:block;
+    width:80%;
+    margin-left:10%;
+    color:#7B7B7B;
+}
+.f_nav li a img{
+    display:block;
+    width:50%;
+}
+.a1,.a2{
+    margin-top:15%;
+}
+.a1 img,.a2 img{
+    margin-left:25%;
+}
+.a5{
+    margin-top:12%;
+}
+.a5 img{
+    margin-left:20%;
+}
+.a4{
+    margin-top:22%;
+}
+.a4 img{
+    margin-left:20%;
+}
+.a3{
+    margin-top:8%;
+}
+.a3 img{
+    margin-left:25%;
+    margin-bottom:8%;
+    width:60%;
+}
+/*底部图片的选中样式*/
+.f_nav li:active a,.f_nav li:focus a,.f_nav li a.on{
+    color:#FF6666;
+}
+.left{
+    float:left;
+}
+.right{
+    float:right;
+}
+.table td img{
+    display:block;
+    margin:0 auto;
+}
+button{
+    background-color:transparent;
+    font-size:18px;
+    box-shadow:0px 1px 2px 0px rgba(0,0,0,0.20);
+    border-radius:8px;
+    border:0;
+}
+.btnLess4{
+    width:132px;
+    height:44px;
+    background:#ff6666;
+    color:#fff;
+}
+.btnBgWhite{
+    border:1px solid #ff6666;
+    width:94px;
+    height:42px;
+}
+.btnMore4{
+    background:#ff6666;
+    width:132px;
+    height:44px;
+    color:#fff;
+}
+.modal_btn{
+    border:1px solid #ffffff;
+    box-shadow:0px 1px 2px 0px rgba(0,0,0,0.30);
+    border-radius:80px;
+    width:158px;
+    height:46px;
+    margin:5% auto;
+}
+.btnTouWhite{
+    border:1px solid #000;
+    border-radius:19px;
+    width:78px;
+    height:38px;
+    font-family:PingFangSC-Regular;
+    font-size:18px;
+}
+.btnTouRed{
+    border:2px solid #ff6666;
+    border-radius:19px;
+    width:76px;
+    height:36px;
+    color:#ff6666;
+}
+.mask{
+    top:0;
+    opacity:0.69;
+    background:rgba(0,0,0,0.70);
+    display:none;
+    position:fixed;
+}
+.testCont{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+}
+img{
+    margin:0 auto;
+}
+.foot{
+    height:63px;
+    /*line-height:63px;*/
+    padding:5% auto;
+    background-color:#fff;
+}
+.foot button{
+    margin:9px auto;
+}
+input{
+    outline:none;
+}
+input[type="checkbox"]{
+    /*visibility: hidden;*/
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance:none;
+    background: #fff url(../images/unchecked.png);
+    outline:none;
+    /*background:none\0;*/
+    /**background:none;*/
+    /*filter:alpha(opacity=0);*/
+    height: 18px;
+    /*vertical-align: middle;*/
+    width: 18px;
+    background-color:#fff;
+    border:red 1px solid;
+}
+input[type="checkbox"]:checked {
+    background: #fff url(../images/checked.png);
+}
+
+/*input[type="checkbox"]+label:before{*/
+    /*background:url("static/images/unchecked.png");*/
+    /*width:18px;*/
+    /*height:18px;*/
+    /*position:absolute;*/
+    /*left:0;*/
+    /*top:0;*/
+    /*content:" ";*/
+/*}*/
+/*input[type="checkbox"]{*/
+    /*/!*box-sizing:border-box;*!/*/
+    /*left:0;*/
+    /*margin:0;*/
+    /*padding:0;*/
+    /*position:absolute;*/
+    /*top:3px;*/
+/*}*/
+/*.checkbox{*/
+    /*min-height:24px;*/
+    /*padding-left:24px;*/
+    /*position:relative;*/
+/*}*/
+/*input[type="checkbox"]+label:hover:before{*/
+    /*background-position:-24px 0;*/
+/*}*/
+/*input[type="checkbox"]:checked+label:before{*/
+    /**/
+    /*background-position:-24px 0;*/
+/*}*/
+/*input[type="checkbox"][disabled]+label:before{*/
+    /*background-position:-72px 0;*/
+/*}*/
+/*input[type="checkbox"][disabled]:checked+label:before{*/
+    /*background-position:-96px 0;*/
+/*}*/
+

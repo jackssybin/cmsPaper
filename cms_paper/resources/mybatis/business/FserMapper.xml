@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FserMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into SYS_FSER(
+			USER_ID,	
+			OPEN_ID,	
+			NICK_NAME,	
+			HEAD_IMGURL,	
+			NAME,	
+			SEX,	
+			PHONE,	
+			QQ,	
+			EMAIL,	
+			ADDRESS,	
+			INTRODUCTION,	
+			REGISTER_TIME,	
+			LAST_LOGIN_TIME,	
+			LAST_IP,	
+			COMMON_IP,	
+			USER_STATE
+		) values (
+			#{USER_ID},	
+			#{OPEN_ID},	
+			#{NICK_NAME},	
+			#{HEAD_IMGURL},	
+			#{NAME},	
+			#{SEX},	
+			#{PHONE},	
+			#{QQ},	
+			#{EMAIL},	
+			#{ADDRESS},	
+			#{INTRODUCTION},	
+			#{REGISTER_TIME},	
+			#{LAST_LOGIN_TIME},	
+			#{LAST_IP},	
+			#{COMMON_IP},	
+			#{USER_STATE}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from SYS_FSER
+		where 
+			USER_ID = #{USER_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  SYS_FSER
+			set 
+				OPEN_ID = #{OPEN_ID},
+				NICK_NAME = #{NICK_NAME},
+				HEAD_IMGURL = #{HEAD_IMGURL},
+				NAME = #{NAME},
+				SEX = #{SEX},
+				PHONE = #{PHONE},
+				QQ = #{QQ},
+				EMAIL = #{EMAIL},
+				ADDRESS = #{ADDRESS},
+				INTRODUCTION = #{INTRODUCTION},
+				REGISTER_TIME = #{REGISTER_TIME},
+				LAST_LOGIN_TIME = #{LAST_LOGIN_TIME},
+				LAST_IP = #{LAST_IP},
+				COMMON_IP = #{COMMON_IP},
+				USER_STATE = #{USER_STATE}
+			where 
+				USER_ID = #{USER_ID}
+	</update>
+	
+	
+	<!-- 修改 -->
+	<update id="editState" parameterType="pd">
+		update  SYS_FSER
+			set 
+				USER_STATE = #{USER_STATE}
+			where 
+				USER_ID = #{USER_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			USER_ID,	
+			OPEN_ID,	
+			NICK_NAME,	
+			HEAD_IMGURL,	
+			NAME,	
+			SEX,	
+			PHONE,	
+			QQ,	
+			EMAIL,	
+			ADDRESS,	
+			INTRODUCTION,	
+			REGISTER_TIME,	
+			LAST_LOGIN_TIME,	
+			LAST_IP,	
+			COMMON_IP,	
+			USER_STATE
+		from 
+			SYS_FSER
+		where 
+			USER_ID = #{USER_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.USER_ID,	
+				a.OPEN_ID,	
+				a.NICK_NAME,	
+				a.HEAD_IMGURL,	
+				a.NAME,	
+				a.SEX,	
+				a.PHONE,	
+				a.QQ,	
+				a.EMAIL,	  
+				a.ADDRESS,	
+				a.INTRODUCTION,	
+				a.REGISTER_TIME,	
+				a.LAST_LOGIN_TIME,	
+				a.LAST_IP,	
+				a.COMMON_IP,	
+				a.USER_STATE
+		from 
+				SYS_FSER a
+		where 1 = 1
+			<if test="pd.NICK_NAME != null and pd.NICK_NAME != ''">
+		and
+				a.NICK_NAME LIKE CONCAT(CONCAT('%', #{pd.NICK_NAME}),'%')
+			</if>
+			<if test="pd.USER_STATE != null and pd.USER_STATE != ''">
+		and
+				a.USER_STATE LIKE CONCAT(CONCAT('%', #{pd.USER_STATE}),'%')
+			</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.USER_ID,	
+				a.OPEN_ID,	
+				a.NICK_NAME,	
+				a.HEAD_IMGURL,	
+				a.NAME,	
+				a.SEX,	
+				a.PHONE,	
+				a.QQ,	
+				a.EMAIL,	
+				a.ADDRESS,	
+				a.INTRODUCTION,	
+				a.REGISTER_TIME,	
+				a.LAST_LOGIN_TIME,	
+				a.LAST_IP,	
+				a.COMMON_IP,	
+				a.USER_STATE
+		from 
+				SYS_FSER a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from SYS_FSER
+		where 
+			USER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>
